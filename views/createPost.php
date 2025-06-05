@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GrowTogether - Create Post</title>
+  <link rel="stylesheet" href="/src/style.css">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
-  <header class="bg-gray-300 text-black p-5 fixed m-auto top-0 w-full shadow-md z-10">
+  <header class="bg-gray-300 text-black p-4 fixed m-auto top-0 w-full shadow-md z-10">
     <div class="mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold"><a href="?c=Todos&m=grow">&lt;</a> Create Post</h1>
+      <h1 class="text-2xl py-2 font-bold"><a href="?c=Todos&m=grow">&lt;</a> Create Post</h1>
     </div>
   </header>
 
@@ -50,9 +51,27 @@
     </form>
   </div>
 
-  <footer  style="box-shadow: 0 -2px 1px rgba(0,0,0,0.2);" class="fixed bottom-0 w-full bg-white text-black shadow-top-md z-10 p-4">
-    <nav class="flex justify-around items-center">
-      </nav>
-  </footer>
+  <footer style="box-shadow: 0 -2px 1px rgba(0,0,0,0.2);" class="fixed bottom-0 w-full bg-white text-black shadow-top-md z-10 p-4">
+        <nav class="flex justify-around items-center">
+            <a href="?c=Todos&m=grow" class="flex flex-col items-center text-xs pt-px">
+                <img src="/src/image/icon-home.png" class="w-10 h-10 mb-0.5" alt="Home">
+                <span>Home</span>
+            </a>
+            <?php
+                  $createLink = "?c=Todos&m=signUp"; 
+                  if (isset($userRole) && $userRole === 'speaker') {
+                      $createLink = "?c=Todos&m=create"; 
+                  }
+                ?>
+                <a href="<?= $createLink ?>" class="flex flex-col items-center text-xs">
+                    <img src="/src/image/icon-create.png" class="w-10 h-10 mb-0.5" alt="Create">
+                    <span>Create</span>
+                </a>
+            <a href="?c=Todos&m=registered" class="flex flex-col items-center text-xs">
+                <img src="/src/image/icon-activities.png" class="w-10 h-10 mb-0.5" alt="Registered">
+                <span>My Activities</span>
+            </a>
+        </nav>
+    </footer>
 </body>
 </html>

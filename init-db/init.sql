@@ -41,13 +41,49 @@ INSERT INTO `users` (`id`, `user_name`, `password`, `role`) VALUES
 (4, 'Bob', '$2y$10$I.J2k3l4mN5o6p7q.r8S9t0u1V2w3x4Y5z6a7b8c9d0E1fG2h3i4J', 'speaker'); -- password: Bob123
 
 INSERT INTO `events` (`id`, `user_id`, `title`, `topic`, `description`, `image_url`) VALUES
-(1, 3, 'Introduction to Docker', 'Technology', 'A beginner-friendly session on Docker by Alice.', 'uploads/image/mockup-poster-1.jpg'),       -- Created by Alice (speaker)
-(2, 4, 'Advanced CSS Grid Techniques', 'Web Design', 'A deep dive into modern CSS for creating complex layouts.', 'uploads/image/mockup-poster-3.jpg'), -- Created by Alice (speaker)
-(3, 4, 'Public Speaking Masterclass', 'Personal Development', 'Improve your confidence on stage.', 'uploads/image/mockup-poster-2.jpg'),
-(4, 4, 'Effective Team Collaboration', 'Business', 'Learn how to work better in teams.', 'uploads/image/mockup-poster-1.jpg'),
-(5, 3, 'AI in Everyday Life', 'Technology', 'Exploring the impact of AI on daily tasks.', 'uploads/image/mockup-poster-2.jpg'),
-(6, 3, 'Building Resilient Systems', 'Technology', 'Strategies for creating robust systems.', 'uploads/image/mockup-poster-3.jpg');
+(1, 3, 'Introduction to Docker', 'Technology', 'A beginner-friendly session on Docker by Alice.', 'uploads/images/mockup-poster-1.jpg'),       -- Created by Alice (speaker)
+(2, 4, 'Advanced CSS Grid Techniques', 'Web Design', 'A deep dive into modern CSS for creating complex layouts.', 'uploads/images/mockup-poster-3.jpg'), -- Created by Alice (speaker)
+(3, 4, 'Public Speaking Masterclass', 'Personal Development', 'Improve your confidence on stage.', 'uploads/images/mockup-poster-2.jpg'),
+(4, 4, 'Effective Team Collaboration', 'Business', 'Learn how to work better in teams.', 'uploads/images/mockup-poster-1.jpg'),
+(5, 3, 'AI in Everyday Life', 'Technology', 'Exploring the impact of AI on daily tasks.', 'uploads/images/mockup-poster-2.jpg'),
+(6, 3, 'Building Resilient Systems', 'Technology', 'Strategies for creating robust systems.', 'uploads/images/mockup-poster-3.jpg');
 
 
 INSERT INTO `event_registrations` (`user_id`, `event_id`) VALUES
 (2, 6);
+
+CREATE TABLE `comments` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `event_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `comment_text` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`event_id`) REFERENCES `events`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+);
+
+INSERT INTO `comments` (`event_id`, `user_id`, `comment_text`) VALUES
+(1, 2, 'This Docker session looks interesting! Can beginners really follow along?'), 
+(1, 3, 'Absolutely, Joe! It is designed for beginners. Hope to see you there!'),     
+(3, 1, 'I learned a lot from this masterclass!'),
+(4, 2, 'Collaboration is key in any business! Looking forward to this event.'),
+(2, 1, 'Great marketing tips!'); 
+
+CREATE TABLE `event_reviews` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `event_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `rating` TINYINT NOT NULL,  -- Rating from 1 to 5
+    `review_text` TEXT NULL, 
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`event_id`) REFERENCES `events`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    UNIQUE KEY `user_event_review_unique` (`user_id`, `event_id`) 
+);
+
+INSERT INTO `event_reviews` (`event_id`, `user_id`, `rating`, `review_text`) VALUES
+(1, 3, 5, 'Amazing Docker session! Very clear for beginners.'), 
+(1, 1, 4, 'Good overview, looking forward to more advanced topics!'),
+(3, 3, 4, 'Great public speaking tips, really helped my confidence.'),
+(4, 4, 5, 'Excellent collaboration strategies, very practical!'),
+(2, 1, 3, 'Interesting CSS techniques, but could use more examples.');
