@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    ports:
+      - "80:80" 
+    volumes:
+      - .:/var/www/html
+      - ./php_config/custom.ini:/usr/local/etc/php/conf.d/uploads.ini 
+    depends_on:
+      - db
+    restart: always
+    environment:
+      - DB_HOST=db
+      - DB_USER=growlink_user
+      - DB_PASSWORD=root
+      - DB_NAME=growlink_db
+
+  db:
+    image: mysql:latest
+    container_name: growlink-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: growlink_user
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: growlink_db
+    volumes:
+      - growlink_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    restart: always
+
+volumes:
+  growlink_data:
