@@ -1,17 +1,28 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+// Memulai session untuk seluruh aplikasi
+session_start();
 
-$controller = $_GET['c'] ?? 'Home';
-$method = $_GET['m'] ?? 'index';
+// Memuat kelas-kelas dasar yang akan selalu digunakan
+require_once 'controllers/Controller.class.php';
+require_once 'models/Model.class.php'; // <<< TAMBAHKAN BARIS INI
 
-require_once "controllers/Controller.class.php";
-require_once "controllers/$controller.class.php";
+// ---- Logika Routing Anda Dimulai Di Sini ----
+$controllerName = $_GET['c'] ?? 'Home'; // Default ke 'Home' controller
+$methodName = $_GET['m'] ?? 'index';   // Default ke 'index' method
 
-$c = new $controller();
-$c->$method();
+$controllerFileName = 'controllers/' . $controllerName . '.class.php';
 
-if (empty($_GET['c']) && empty($_GET['m'])) {
-    header('Location: index.php?c=Todos&m=grow');
-    exit;
+if (file_exists($controllerFileName)) {
+    require_once $controllerFileName;
+    if (class_exists($controllerName) && method_exists($controllerName, $methodName)) {
+        $controller = new $controllerName();
+        $controller->$methodName();
+    } else {
+        // Handle error: class or method not found
+        echo "Error: Controller or method not found.";
+    }
+} else {
+    // Handle error: controller file not found
+    echo "Error: Controller file not found.";
 }
+?>

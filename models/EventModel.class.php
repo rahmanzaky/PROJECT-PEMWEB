@@ -1,17 +1,21 @@
 <?php
 
 class EventModel extends Model {
-    function getAllEvents() {
-    $sql = "SELECT 
-                events.*, 
-                users.user_name
-            FROM events 
-            JOIN users ON events.user_id = users.id 
-            ORDER BY events.created_at DESC";
-            
-    $result = $this->db->query($sql);
-    return $result->fetch_all(MYSQLI_ASSOC); 
-}
+
+    public function getAllEvents() {
+        $sql = "SELECT 
+                    events.*, 
+                    users.user_name,
+                    events.topic
+                FROM events 
+                JOIN users ON events.user_id = users.id 
+                ORDER BY events.created_at DESC";
+                
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC); 
+    }
 
     public function searchEvents($query) {
         $sql = "SELECT 
@@ -31,25 +35,9 @@ class EventModel extends Model {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getEventsByUserName($username) {
-        $sql = "SELECT * FROM events WHERE user_name = ? ORDER BY created_at DESC";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
     public function registerUserForEvent($userId, $eventId) {
-        $checkSql = "SELECT id FROM event_registrations WHERE user_id = ? AND event_id = ?";
-        $checkStmt = $this->db->prepare($checkSql);
-        $checkStmt->bind_param('ii', $userId, $eventId);
-        $checkStmt->execute();
-        $result = $checkStmt->get_result();
-
-        if ($result->num_rows > 0) {
-            return false;
+        if ($this->hasUserJoinedEvent($userId, $eventId)) {
+            return false; // Mencegah duplikasi
         }
 
         $sql = "INSERT INTO event_registrations (user_id, event_id) VALUES (?, ?)";
@@ -57,6 +45,15 @@ class EventModel extends Model {
         $stmt->bind_param('ii', $userId, $eventId);
         
         return $stmt->execute();
+    }
+
+    public function hasUserJoinedEvent($userId, $eventId) {
+        $sql = "SELECT id FROM event_registrations WHERE user_id = ? AND event_id = ? LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param('ii', $userId, $eventId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
     }
 
     public function getRegisteredEventsForUser($userId) {
@@ -92,11 +89,8 @@ class EventModel extends Model {
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param('i', $userId);
         $stmt->execute();
-        
         $result = $stmt->get_result();
         $rows = $result->fetch_all(MYSQLI_ASSOC);
-        
-
         return array_column($rows, 'event_id');
     }
 
@@ -127,12 +121,11 @@ class EventModel extends Model {
                 FROM comments 
                 JOIN users ON comments.user_id = users.id 
                 WHERE comments.event_id = ? 
-                ORDER BY comments.created_at ASC"; // Nunjukkin komen urut waktu buat
+                ORDER BY comments.created_at ASC";
             
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param('i', $eventId);
         $stmt->execute();
-        
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
@@ -140,13 +133,12 @@ class EventModel extends Model {
     public function addComment($eventId, $userId, $commentText) {
         $sql = "INSERT INTO comments (event_id, user_id, comment_text) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($sql);
-        // 'iis' itu untuk integer, integer, dan string
         $stmt->bind_param('iis', $eventId, $userId, $commentText);
         
         return $stmt->execute();
     }
 
-     public function addReview($eventId, $userId, $rating, $reviewText) {
+    public function addReview($eventId, $userId, $rating, $reviewText) {
         if ($this->hasUserReviewedEvent($userId, $eventId)) {
             return false; 
         }
@@ -198,6 +190,4 @@ class EventModel extends Model {
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-
 }

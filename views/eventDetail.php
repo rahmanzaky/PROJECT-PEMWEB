@@ -18,10 +18,10 @@
         </button>
     </div>
 
-    <header class="bg-amber-600 text-black p-4 fixed m-auto w-full shadow-md z-20 top-0">
+    <header class="bg-amber-600 text-white p-4 fixed m-auto w-full shadow-md z-20 top-0">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-xl font-bold text-white truncate">
-                <a href="?c=Todos&m=grow" class="hover:text-white mr-2 text-2xl"> <?= htmlspecialchars($event['title']) ?></a> 
+                <a href="?c=GrowTogether&m=grow" class="hover:text-white mr-2 text-2xl"> <?= htmlspecialchars($event['title']) ?></a> 
             </h1>
             <button id="hamburger-btn" class="p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
@@ -53,37 +53,37 @@
             </div>
 
             <nav class="flex flex-col space-y-1 flex-grow">
-                <a href="?c=Todos&m=grow" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
+                <a href="?c=Home&m=index" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                     Home
                 </a>
                 
-                <a href="?c=Todos&m=grow" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
+                <a href="?c=GrowTogether&m=grow" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                     GrowTogether
                 </a>
 
                 <?php
-                    $createLink = "?c=Todos&m=signUp"; 
+                    $createLink = "?c=GrowTogether&m=signUp"; 
                     if (isset($userRole) && $userRole === 'speaker') {
-                        $createLink = "?c=Todos&m=create"; 
+                        $createLink = "?c=GrowTogether&m=create"; 
                     }
                 ?>
                 <a href="<?= $createLink ?>" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors pl-12">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     Create Event
                 </a>
-                <a href="?c=Todos&m=registered" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors pl-12">
+                <a href="?c=GrowTogether&m=registered" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors pl-12">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
                     Registered
                 </a>
 
-                <a href="?c=Templates&m=list" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors mt-2">
+                <a href="?c=GrowHub&m=list" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0l2-2m-2 2l-2-2" /></svg>
                     GrowHub
                 </a>
 
-                <a href="?c=Thread&m=index" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
+                <a href="?c=GrowForum&m=index" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H17z" /></svg>
                     GrowForum
                 </a>
@@ -111,9 +111,9 @@
                 <div class="prose max-w-none mb-6"><h3 class="text-xl font-semibold mt-4 mb-2">Description:</h3><p class="text-gray-700 whitespace-pre-line"><?= nl2br(htmlspecialchars($event['description'])) ?></p></div>
                 <?php if (!empty($event['key_summary_path'])): ?><div class="mt-6 mb-6"><h3 class="text-lg font-semibold mb-2">Key Summary:</h3><a href="/<?= htmlspecialchars($event['key_summary_path']) ?>" target="_blank" download="<?= basename(htmlspecialchars($event['key_summary_path'])) ?>" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow hover:shadow-md transition-colors duration-150 ease-in-out">View/Download PDF Summary</a></div><?php endif; ?>
                 <div class="event-actions flex justify-around items-center mt-8 pt-6 border-t border-gray-200">
-                    <a href="?c=Todos&m=showReviewForm&event_id=<?= $event['id'] ?>" class="event-rating text-yellow-500 text-4xl hover:text-yellow-400 transition-colors duration-150">★</a>
-                    <?php if (isset($currentUserId) && $event['user_id'] == $currentUserId): ?><button class="join-event bg-gray-400 text-white px-6 py-3 rounded-lg cursor-not-allowed text-lg font-semibold" disabled>Your Event</button><?php elseif (isset($registeredEventIds) && in_array($event['id'], $registeredEventIds)): ?><button class="join-event bg-green-600 text-white px-6 py-3 rounded-lg cursor-not-allowed text-lg font-semibold" disabled>✓ Joined</button><?php else: ?><a href="?c=Todos&m=joinEvent&id=<?= $event['id'] ?>" class="join-event bg-amber-500 hover:bg-amber-800 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-transform duration-200 hover:scale-105">Join Event</a><?php endif; ?>
-                    <a href="?c=Todos&m=showComments&event_id=<?= $event['id'] ?>" class="comment-event text-3xl text-gray-500 hover:text-gray-700">💬</a>
+                    <a href="?c=GrowTogether&m=showReviewForm&event_id=<?= $event['id'] ?>" class="event-rating text-yellow-500 text-4xl hover:text-yellow-400 transition-colors duration-150">★</a>
+                    <?php if (isset($currentUserId) && $event['user_id'] == $currentUserId): ?><button class="join-event bg-gray-400 text-white px-6 py-3 rounded-lg cursor-not-allowed text-lg font-semibold" disabled>Your Event</button><?php elseif (isset($registeredEventIds) && in_array($event['id'], $registeredEventIds)): ?><button class="join-event bg-green-600 text-white px-6 py-3 rounded-lg cursor-not-allowed text-lg font-semibold" disabled>✓ Joined</button><?php else: ?><a href="?c=GrowTogether&m=joinEvent&id=<?= $event['id'] ?>" class="join-event bg-amber-500 hover:bg-amber-800 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-transform duration-200 hover:scale-105">Join Event</a><?php endif; ?>
+                    <a href="?c=GrowTogether&m=showComments&event_id=<?= $event['id'] ?>" class="comment-event text-3xl text-gray-500 hover:text-gray-700">💬</a>
                 </div>
             </div>
         </div>

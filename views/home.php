@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/src/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Registered - GrowTogether</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to GrowLink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800 pb-24">
+<body class="bg-white font-sans text-gray-800 leading-relaxed w-full">
+    <div class="w-full bg-white min-h-screen">
+        
+        <header class="bg-amber-600 text-black p-4 fixed m-auto w-full shadow-md z-20">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white">
+                    <a href="?c=Home&m=index" class="hover:text-white">GrowLink</a>
+                </h1>
+                <button id="hamburger-btn" class="p-2 focus:outline-none focus:ring-2 focus:ring-white rounded-md text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </header>
 
-    <header class="bg-amber-600 text-white p-4 fixed m-auto w-full shadow-md z-20 top-0">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-white"><a href="?c=GrowTogether&m=grow" class="mr-2">Registered</a></h1>
-            <button id="hamburger-btn" class="p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-            </button>
-        </div>
-    </header>
-
-    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-orange-50 backdrop-blur-lg shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out z-40">
+           <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-orange-50 backdrop-blur-lg shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out z-40">
         <div class="flex flex-col h-full p-6">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-xl font-bold text-gray-800">Menu</h2>
@@ -89,69 +93,50 @@
 
     <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 opacity-0 invisible transition-opacity duration-300 ease-in-out"></div>
 
-    <main class="py-8 px-4 mt-20">
-        <div class="container mx-auto max-w-2xl">
-            <div class="user-info flex items-center space-x-4 mb-8 p-4 bg-white rounded-lg shadow">
-                <div class="flex-shrink-0"><div class="rounded-full bg-gray-200 w-16 h-16 flex items-center justify-center overflow-hidden"><img src="/src/image/profile.png" class="w-full h-full object-cover" alt="User Profile"></div></div>
-                <div>
-                    <span class="user-name text-xl font-semibold"><?= htmlspecialchars($username) ?></span>
-                    <p class="text-sm text-gray-500"><?= htmlspecialchars($userRole) === 'speaker' ? 'Speaker Account' : 'User Account' ?></p>
+        <main class="pt-20">
+            <div class="m-5 bg-white rounded-xl border-4 border-amber-600 p-5 flex justify-between items-center relative overflow-hidden shadow-lg">
+                <div class="pr-4 flex-1">
+                    <h2 class="text-gray-800 text-lg font-bold mb-2">Welcome to GrowLink!</h2>
+                    <p class="text-gray-600 text-sm"> Let’s start your journey of self-development and project-building with GrowLink!</p>
+                </div>
+                <div class="relative w-24 h-20 flex-shrink-0 text-xl">
+                    <div class="absolute top-2 left-5 text-blue-500">⚙️</div><div class="absolute top-9 right-2 text-blue-500">⚙️</div><div class="absolute top-1 right-6 text-purple-500">🧩</div><div class="absolute top-6 left-1 text-red-500">🧩</div><div class="absolute bottom-2 left-6 text-amber-500">🧩</div><div class="absolute top-4 left-12 text-yellow-400">⭐</div><div class="absolute bottom-4 right-5 text-yellow-400">⭐</div><div class="absolute bottom-1 right-1 text-gray-400">📄</div><div class="absolute top-10 left-9 text-green-500">📊</div>
                 </div>
             </div>
 
-            <section class="mb-10">
-                <div class="bg-amber-600 p-3 rounded-t-lg shadow">
-                    <h2 class="text-xl font-bold text-center text-white">Events Joined</h2>
-                </div>
-                <div class="bg-white p-4 rounded-b-lg shadow">
-                    <?php if (empty($registeredEvents)): ?>
-                        <p class="text-gray-500 text-center py-3">You haven't joined any events yet.</p>
-                    <?php else: ?>
-                        <div class="flex overflow-x-auto gap-4 p-2">
-                            <?php foreach ($registeredEvents as $event): ?>
-                                <a href="?c=GrowTogether&m=showEvent&id=<?= $event['id'] ?>" class="flex-none w-40 border border-gray-200 rounded-lg overflow-hidden shadow hover:shadow-md transition-shadow">
-                                    <img src="/<?= htmlspecialchars($event['image_url']) ?>" alt="<?= htmlspecialchars($event['title']) ?>" class="w-full h-24 object-cover">
-                                    <h3 class="text-center p-2 text-sm font-semibold truncate"><?= htmlspecialchars($event['title']) ?></h3>
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </section>
+            <div class="px-5 pb-8">
+                <h3 class="text-amber-600 text-xl font-bold mb-3">Menu</h3>
+                <p class="text-gray-800 text-sm text-justify mb-6">
+                    Discover a variety of main features designed to help you learn, collaborate, and grow. Please log in first to enjoy all of GrowLink's features!
+                </p>
 
-            <section>
-                <div class="bg-amber-600/40 p-3 rounded-t-lg shadow">
-                    <h2 class="text-xl font-bold text-center text-red-700">Events Needing Your Review</h2>
-                </div>
-                <div class="bg-white p-4 rounded-b-lg shadow">
-                     <?php if (empty($eventsNeedingReview)): ?>
-                        <p class="text-gray-500 text-center py-3">No events awaiting your review. Great job!</p>
-                    <?php else: ?>
-                        <div class="flex overflow-x-auto gap-4 p-2">
-                            <?php foreach ($eventsNeedingReview as $event): ?>
-                                <a href="?c=GrowTogether&m=showReviewForm&event_id=<?= $event['id'] ?>" class="flex-none w-40 border border-gray-200 rounded-lg overflow-hidden shadow hover:shadow-md transition-shadow">
-                                    <img src="/<?= htmlspecialchars($event['image_url']) ?>" alt="<?= htmlspecialchars($event['title']) ?>" class="w-full h-24 object-cover">
-                                    <h3 class="text-center p-2 text-sm font-semibold truncate"><?= htmlspecialchars($event['title']) ?></h3>
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </section>
-        </div>
-    </main>
-    
-    <script src="/js/app-popups.js"></script>
+                <a href="?c=GrowHub&m=list" class="block bg-white rounded-lg border-l-4 border-amber-600 p-5 mb-4 shadow-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+                    <h4 class="text-amber-600 text-base font-bold mb-1">GrowHub</h4>
+                    <p class="text-gray-800 text-sm">A collection of templates like proposals, event rundowns, and more. Search, upload, download, and save with ease!</p>
+                </a>
+                <a href="?c=GrowTogether&m=grow" class="block bg-white rounded-lg border-l-4 border-amber-600 p-5 mb-4 shadow-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+                    <h4 class="text-amber-600 text-base font-bold mb-1">GrowTogether</h4>
+                    <p class="text-gray-800 text-sm"> Free mentoring & webinars! Join as a participant or speaker, plus get access to ratings and reviews.</p>
+                </a>
+                <a href="?c=GrowForum&m=index" class="block bg-white rounded-lg border-l-4 border-amber-600 p-5 mb-4 shadow-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+                    <h4 class="text-amber-600 text-base font-bold mb-1">GrowForum</h4>
+                    <p class="text-gray-800 text-sm">A thread of short experiences and tips. Save, create, and enjoy exploring them all!</p>
+                </a>
+            </div>
+        </main>
+    </div>
+
     <script>
+        // Hamburger Menu Logic
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const menuOverlay = document.getElementById('menu-overlay');
         const openMenu = () => { mobileMenu.classList.remove('translate-x-full'); mobileMenu.classList.add('translate-x-0'); menuOverlay.classList.remove('invisible'); menuOverlay.classList.remove('opacity-0'); };
         const closeMenu = () => { mobileMenu.classList.add('translate-x-full'); mobileMenu.classList.remove('translate-x-0'); menuOverlay.classList.add('opacity-0'); setTimeout(() => { menuOverlay.classList.add('invisible'); }, 300); };
-        hamburgerBtn.addEventListener('click', openMenu);
-        closeMenuBtn.addEventListener('click', closeMenu);
-        menuOverlay.addEventListener('click', closeMenu);
+        if(hamburgerBtn) hamburgerBtn.addEventListener('click', openMenu);
+        if(closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+        if(menuOverlay) menuOverlay.addEventListener('click', closeMenu);
     </script>
 </body>
 </html>

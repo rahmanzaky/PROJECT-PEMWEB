@@ -37,10 +37,18 @@ CREATE TABLE `event_registrations` (
 CREATE TABLE `growhub` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(255) NOT NULL,
-    `category` INT,
+    `category` VARCHAR(100), 
     `file_path` VARCHAR(255),
     `user_id` INT,
-    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL -- <<< DITAMBAHKAN
+);
+
+CREATE TABLE `growforum` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL, 
+    `content` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
 INSERT INTO `users` (`id`, `user_name`, `password`, `role`) VALUES
