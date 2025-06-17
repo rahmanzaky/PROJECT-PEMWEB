@@ -34,6 +34,15 @@ CREATE TABLE `event_registrations` (
     UNIQUE KEY `user_event_unique` (`user_id`, `event_id`)
 );
 
+CREATE TABLE `growhub` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(255) NOT NULL,
+    `category` INT,
+    `file_path` VARCHAR(255),
+    `user_id` INT,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+);
+
 INSERT INTO `users` (`id`, `user_name`, `password`, `role`) VALUES
 (1, 'Joe', '$2y$10$9OKi06A92l7jR.0iY1sZ2.p.q1Sg2l7F/b6x3w9C4jHk.U8d0e.5G', 'speaker'), -- password: Joe123
 (2, 'Erza', '$2y$10$w1B2q.g5H8d7j/kL0m.nOpQrStUvWx.Y3z4A5s6B7c8D9e0F1gHjI', 'user'), -- password: Erza123
