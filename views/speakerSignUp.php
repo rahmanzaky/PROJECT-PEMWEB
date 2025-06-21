@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/src/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Sign Up as Speaker - GrowTogether</title>
+    <title>Sign Up as Speaker | GrowTogether</title>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 pb-24">
 
@@ -96,11 +96,6 @@
         </section>
         <section class="bg-white p-6 rounded-lg shadow-md">
             <form action="?c=User&m=applyAsSpeaker" method="post" enctype="multipart/form-data" class="space-y-6">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="user-fullname">Full Name</label>
-                    <input type="text" name="user-fullname" id="user-fullname" class="shadow appearance-none border border-amber-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your full name" required>
-                </div>
-
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="linkedin-url">LinkedIn Profile URL</label>
                     <input type="url" name="linkedin-url" id="linkedin-url" class="shadow appearance-none border border-amber-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="https://linkedin.com/in/yourprofile">

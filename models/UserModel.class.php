@@ -6,14 +6,16 @@ class UserModel extends Model {
      * Membuat pengguna baru dengan password yang sudah di-hash.
      * Metode ini sudah sempurna, tidak ada perubahan.
      */
-    public function createUser($username, $plaintextPassword) {
-        $hashedPassword = password_hash($plaintextPassword, PASSWORD_DEFAULT);
-
-        $sql = "INSERT INTO users (user_name, password) VALUES (?, ?)";
+    public function createUser($username, $hashedPassword, $fullName, $email) {
+        $sql = "INSERT INTO users (user_name, password, full_name, email, role) VALUES (?, ?, ?, ?, 'user')";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param('ss', $username, $hashedPassword);
+        $stmt->bind_param('ssss', $username, $hashedPassword, $fullName, $email);
         
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            return $this->db->insert_id; 
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -82,5 +84,6 @@ class UserModel extends Model {
         $stmt->bind_param('ssssi', $fullName, $linkedinUrl, $cvPath, $category, $userId);
         return $stmt->execute();
     }
+    
 }
 ?>

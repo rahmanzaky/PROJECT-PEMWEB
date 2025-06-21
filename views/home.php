@@ -56,21 +56,6 @@
                     GrowTogether
                 </a>
 
-                <?php
-                    $createLink = "?c=GrowTogether&m=signUp"; 
-                    if (isset($userRole) && $userRole === 'speaker') {
-                        $createLink = "?c=GrowTogether&m=create"; 
-                    }
-                ?>
-                <a href="<?= $createLink ?>" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors pl-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    Create Event
-                </a>
-                <a href="?c=GrowTogether&m=registered" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors pl-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
-                    Registered
-                </a>
-
                 <a href="?c=GrowHub&m=list" class="flex items-center p-3 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0l2-2m-2 2l-2-2" /></svg>
                     GrowHub
@@ -97,10 +82,10 @@
             <div class="m-5 bg-white rounded-xl border-4 border-amber-600 p-5 flex justify-between items-center relative overflow-hidden shadow-lg">
                 <div class="pr-4 flex-1">
                     <h2 class="text-gray-800 text-lg font-bold mb-2">Welcome to GrowLink!</h2>
-                    <p class="text-gray-600 text-sm"> Let’s start your journey of self-development and project-building with GrowLink!</p>
+                    <p class="text-gray-600 text-sm"> Let's start your journey of self-development and project-building with GrowLink!</p>
                 </div>
                 <div class="relative w-24 h-20 flex-shrink-0 text-xl">
-                    <div class="absolute top-2 left-5 text-blue-500">⚙️</div><div class="absolute top-9 right-2 text-blue-500">⚙️</div><div class="absolute top-1 right-6 text-purple-500">🧩</div><div class="absolute top-6 left-1 text-red-500">🧩</div><div class="absolute bottom-2 left-6 text-amber-500">🧩</div><div class="absolute top-4 left-12 text-yellow-400">⭐</div><div class="absolute bottom-4 right-5 text-yellow-400">⭐</div><div class="absolute bottom-1 right-1 text-gray-400">📄</div><div class="absolute top-10 left-9 text-green-500">📊</div>
+                    <!-- <div class="absolute top-2 left-5 text-blue-500">⚙️</div><div class="absolute top-9 right-2 text-blue-500">⚙️</div><div class="absolute top-1 right-6 text-purple-500">🧩</div><div class="absolute top-6 left-1 text-red-500">🧩</div><div class="absolute bottom-2 left-6 text-amber-500">🧩</div><div class="absolute top-4 left-12 text-yellow-400">⭐</div><div class="absolute bottom-4 right-5 text-yellow-400">⭐</div><div class="absolute bottom-1 right-1 text-gray-400">📄</div><div class="absolute top-10 left-9 text-green-500">📊</div> -->
                 </div>
             </div>
 

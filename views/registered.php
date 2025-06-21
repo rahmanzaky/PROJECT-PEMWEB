@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/src/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Registered - GrowTogether</title>
+    <title>Registered | GrowTogether</title>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 pb-24">
 

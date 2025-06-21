@@ -98,17 +98,24 @@ class GrowTogether extends Controller {
     /**
      * Menampilkan halaman pendaftaran sebagai speaker.
      */
-    public function signUp() {
-        $currentUserId = $_SESSION['user_id'] ?? 0;
-        $userModel = $this->loadModel('UserModel');
-        $currentUser = $userModel->getUserById($currentUserId);
-        
+    function signUp() {
+        // Pengecekan Keamanan: Apakah pengguna sudah login?
+        // Menggunakan helper method isLoggedIn() dari Controller parent.
+        if (!$this->isLoggedIn()) {
+            // Jika tidak, paksa arahkan ke halaman login.
+            header('Location: ?c=Auth&m=index');
+            exit();
+        }
+
+        // Jika sudah login, lanjutkan untuk menampilkan halaman.
+        // Data pengguna ($currentUserName dan $userRole) sudah disiapkan oleh
+        // constructor dari Controller parent, jadi kita bisa langsung meneruskannya
+        // ke view untuk digunakan oleh menu hamburger.
         $this->loadView('speakerSignUp.php', [
-            'currentUserName' => $currentUser['user_name'] ?? 'Guest',
-            'userRole' => $currentUser['role'] ?? 'user'
+            'currentUserName' => $this->currentUserName,
+            'userRole' => $this->userRole
         ]);
     }
-
     /**
      * Menampilkan halaman hasil pencarian.
      */
@@ -150,6 +157,31 @@ class GrowTogether extends Controller {
             'userRole' => $currentUser['role'] ?? 'user',
             'currentUserId' => $currentUserId
         ]);
+    }
+
+    public function joinEvent() {
+        // 1. Lindungi route: pastikan pengguna sudah login
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ?c=Auth&m=index');
+            exit();
+        }
+        $userId = $_SESSION['user_id'];
+        
+        // 2. Ambil ID event dari URL
+        $eventId = intval($_GET['id'] ?? 0);
+
+        // 3. Validasi dasar
+        if ($userId > 0 && $eventId > 0) {
+            $eventModel = $this->loadModel('EventModel');
+            
+            // Panggil model untuk mendaftarkan pengguna ke event
+            $eventModel->registerUserForEvent($userId, $eventId);
+        }
+        
+        // 4. Arahkan pengguna kembali ke halaman utama dengan status sukses
+        //    agar notifikasi pop-up bisa muncul.
+        header('Location: ?c=GrowTogether&m=grow&status=joined');
+        exit();
     }
 
     /**
