@@ -1,14 +1,11 @@
 <?php
-// Memulai session untuk seluruh aplikasi
 session_start();
 
-// Memuat kelas-kelas dasar yang akan selalu digunakan
 require_once 'controllers/Controller.class.php';
-require_once 'models/Model.class.php'; // <<< TAMBAHKAN BARIS INI
+require_once 'models/Model.class.php';
 
-// ---- Logika Routing Anda Dimulai Di Sini ----
-$controllerName = $_GET['c'] ?? 'Home'; // Default ke 'Home' controller
-$methodName = $_GET['m'] ?? 'index';   // Default ke 'index' method
+$controllerName = $_GET['c'] ?? 'Home'; 
+$methodName = $_GET['m'] ?? 'index';  
 
 $controllerFileName = 'controllers/' . $controllerName . '.class.php';
 
@@ -18,11 +15,9 @@ if (file_exists($controllerFileName)) {
         $controller = new $controllerName();
         $controller->$methodName();
     } else {
-        // Handle error: class or method not found
         echo "Error: Controller or method not found.";
     }
 } else {
-    // Handle error: controller file not found
     echo "Error: Controller file not found.";
 }
 ?>

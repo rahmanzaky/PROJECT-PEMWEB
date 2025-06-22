@@ -2,26 +2,18 @@
 
 class GrowTogether extends Controller {
 
-    /**
-     * Menampilkan halaman utama dengan semua event.
-     */
     public function grow() {
         $currentUserId = $_SESSION['user_id'] ?? 0;
         $userModel = $this->loadModel('UserModel');
         $currentUser = $userModel->getUserById($currentUserId);
         
         $this->loadView('growTogether.php', [
-            'events' => $this->loadModel('EventModel')->getAllEvents(),
             'userRole' => $currentUser['role'] ?? 'user',
             'currentUserId' => $currentUserId,
             'currentUserName' => $currentUser['user_name'] ?? 'Guest',
-            'registeredEventIds' => $currentUserId ? $this->loadModel('EventModel')->getRegisteredEventIdsForUser($currentUserId) : []
         ]);
     }
-
-    /**
-     * Menampilkan halaman untuk membuat event baru (hanya untuk speaker).
-     */
+    
     public function create() {
         if (!isset($_SESSION['user_id'])) {
             header('Location: ?c=Auth&m=index');
@@ -33,7 +25,6 @@ class GrowTogether extends Controller {
         $user = $userModel->getUserById($userId);
 
         if ($user && $user['role'] === 'speaker') {
-            // Teruskan semua info pengguna yang relevan ke view
             $this->loadView('createPost.php', [
                 'user' => $user,
                 'currentUserName' => $user['user_name'],
@@ -45,9 +36,6 @@ class GrowTogether extends Controller {
         }
     }
 
-    /**
-     * Menyimpan event baru ke database.
-     */
     public function store() {
         if (!isset($_SESSION['user_id'])) {
             header('Location: ?c=Auth&m=index');
@@ -95,30 +83,17 @@ class GrowTogether extends Controller {
         exit();
     }
 
-    /**
-     * Menampilkan halaman pendaftaran sebagai speaker.
-     */
     function signUp() {
-        // Pengecekan Keamanan: Apakah pengguna sudah login?
-        // Menggunakan helper method isLoggedIn() dari Controller parent.
         if (!$this->isLoggedIn()) {
-            // Jika tidak, paksa arahkan ke halaman login.
             header('Location: ?c=Auth&m=index');
             exit();
         }
 
-        // Jika sudah login, lanjutkan untuk menampilkan halaman.
-        // Data pengguna ($currentUserName dan $userRole) sudah disiapkan oleh
-        // constructor dari Controller parent, jadi kita bisa langsung meneruskannya
-        // ke view untuk digunakan oleh menu hamburger.
         $this->loadView('speakerSignUp.php', [
             'currentUserName' => $this->currentUserName,
             'userRole' => $this->userRole
         ]);
     }
-    /**
-     * Menampilkan halaman hasil pencarian.
-     */
     public function search() {
         $currentUserId = $_SESSION['user_id'] ?? 0;
         $userModel = $this->loadModel('UserModel');
@@ -135,9 +110,6 @@ class GrowTogether extends Controller {
         ]);
     }
 
-    /**
-     * Menampilkan halaman "Aktivitas Saya".
-     */
     public function registered() {
         $currentUserId = $_SESSION['user_id'] ?? 0;
         if (!$currentUserId) { header('Location: ?c=Auth&m=index'); exit(); }
@@ -160,33 +132,24 @@ class GrowTogether extends Controller {
     }
 
     public function joinEvent() {
-        // 1. Lindungi route: pastikan pengguna sudah login
         if (!isset($_SESSION['user_id'])) {
             header('Location: ?c=Auth&m=index');
             exit();
         }
         $userId = $_SESSION['user_id'];
         
-        // 2. Ambil ID event dari URL
         $eventId = intval($_GET['id'] ?? 0);
 
-        // 3. Validasi dasar
         if ($userId > 0 && $eventId > 0) {
             $eventModel = $this->loadModel('EventModel');
             
-            // Panggil model untuk mendaftarkan pengguna ke event
             $eventModel->registerUserForEvent($userId, $eventId);
         }
         
-        // 4. Arahkan pengguna kembali ke halaman utama dengan status sukses
-        //    agar notifikasi pop-up bisa muncul.
         header('Location: ?c=GrowTogether&m=grow&status=joined');
         exit();
     }
 
-    /**
-     * Menampilkan halaman detail event.
-     */
     public function showEvent() {
         $eventId = $_GET['id'] ?? 0;
         if ($eventId <= 0) { header('Location: ?c=GrowTogether&m=grow&error=invalid_event'); exit(); }
@@ -208,9 +171,6 @@ class GrowTogether extends Controller {
         ]);
     }
 
-    /**
-     * Menampilkan halaman ulasan/review untuk suatu event.
-     */
     public function showReviewForm() {
         $eventId = $_GET['event_id'] ?? 0;
         if ($eventId <= 0) { header('Location: ?c=GrowTogether&m=grow&error=invalid_event'); exit(); }
@@ -235,9 +195,6 @@ class GrowTogether extends Controller {
         ]);
     }
 
-    /**
-     * Menyimpan ulasan baru.
-     */
     public function storeReview() {
         if (!isset($_SESSION['user_id'])) { header('Location: ?c=Auth&m=index'); exit(); }
         
@@ -258,9 +215,6 @@ class GrowTogether extends Controller {
         exit();
     }
 
-    /**
-     * Menampilkan halaman komentar untuk suatu event.
-     */
     public function showComments() {
         $eventId = $_GET['event_id'] ?? 0;
         if ($eventId <= 0) { header('Location: ?c=GrowTogether&m=grow&error=invalid_event'); exit(); }
@@ -282,9 +236,6 @@ class GrowTogether extends Controller {
         ]);
     }
 
-    /**
-     * Menyimpan komentar baru.
-     */
     public function storeComment() {
         if (!isset($_SESSION['user_id'])) { header('Location: ?c=Auth&m=index'); exit(); }
 

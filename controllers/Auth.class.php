@@ -35,7 +35,6 @@ class Auth extends Controller {
     }
 
     public function logout() {
-        // TIDAK PERLU session_start() di sini
         session_unset();
         session_destroy();
         header("Location: index.php?c=Auth&m=index&status=logged_out");
@@ -48,7 +47,7 @@ class Auth extends Controller {
 
     public function handleRegister() {
         $full_name = $_POST['full_name'] ?? '';
-        $email = $_POST['email'] ?? ''; // Anda mengirim email, pastikan tabel users punya kolom email jika perlu
+        $email = $_POST['email'] ?? ''; 
         $user_name = $_POST['user_name'] ?? '';
         $password = $_POST['password'] ?? '';
 
@@ -64,14 +63,10 @@ class Auth extends Controller {
             return;
         }
 
-        // Simpan user baru
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        // Panggil method createUser yang sudah diperbarui (lihat Langkah 2)
         $user_id = $userModel->createUser($user_name, $hashedPassword, $full_name, $email);
 
         if ($user_id) {
-            // Auto-login setelah registrasi berhasil
-            // TIDAK PERLU session_start() di sini
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_name'] = $user_name;
             $_SESSION['role'] = 'user'; // default role

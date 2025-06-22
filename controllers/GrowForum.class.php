@@ -2,22 +2,16 @@
 
 class GrowForum extends Controller {
 
-    /**
-     * Menampilkan halaman utama GrowForum dengan daftar semua thread.
-     */
     function index() {
-        // Ambil info pengguna saat ini untuk menu hamburger
         $currentUserId = $_SESSION['user_id'] ?? 0;
         $userModel = $this->loadModel('UserModel');
         $currentUser = $userModel->getUserById($currentUserId);
         $currentUserName = $currentUser ? $currentUser['user_name'] : 'Guest';
         $userRole = $currentUser ? $currentUser['role'] : 'user';
 
-        // Logika asli untuk mengambil threads
         $threadModel = $this->loadModel('ThreadModel');
         $threads = $threadModel->getAll(); 
         
-        // Asumsi nama view utama adalah list.php
         $this->loadView('list.php', [ 
             'threads' => $threads,
             'currentUserName' => $currentUserName,
@@ -25,16 +19,12 @@ class GrowForum extends Controller {
         ]);
     }
 
-    /**
-     * Menampilkan formulir untuk membuat thread baru.
-     */
     function form() {
         if (!isset($_SESSION['user_id'])) {
             header('Location: ?c=Auth&m=index');
             exit();
         }
 
-        // Ambil info pengguna saat ini untuk menu hamburger
         $currentUserId = $_SESSION['user_id'];
         $userModel = $this->loadModel('UserModel');
         $currentUser = $userModel->getUserById($currentUserId);
@@ -45,9 +35,6 @@ class GrowForum extends Controller {
         ]);
     }
 
-    /**
-     * Memproses dan menyimpan thread baru dari formulir.
-     */
     function add() {
         if (!isset($_SESSION['user_id'])) {
             header('Location: ?c=Auth&m=index');
@@ -59,7 +46,6 @@ class GrowForum extends Controller {
 
         if (!empty($content)) {
             $threadModel = $this->loadModel('ThreadModel');
-            // Pastikan model insert() Anda menerima userId, bukan nama author
             $threadModel->insert($userId, $content);
         }
 
@@ -67,9 +53,6 @@ class GrowForum extends Controller {
         exit();
     }
 
-    /**
-     * Menampilkan detail dari satu thread.
-     */
     function detail() {
         $id = intval($_GET['id'] ?? 0);
         if ($id <= 0) {
@@ -77,7 +60,6 @@ class GrowForum extends Controller {
             exit();
         }
 
-        // Ambil info pengguna saat ini untuk menu
         $currentUserId = $_SESSION['user_id'] ?? 0;
         $userModel = $this->loadModel('UserModel');
         $currentUser = $userModel->getUserById($currentUserId);
@@ -98,9 +80,6 @@ class GrowForum extends Controller {
         }
     }
 
-    /**
-     * Menghapus thread milik pengguna.
-     */
     function delete() {
         if (!isset($_SESSION['user_id'])) {
             header('Location: ?c=Auth&m=index');
@@ -112,8 +91,6 @@ class GrowForum extends Controller {
 
         if ($id > 0) {
             $threadModel = $this->loadModel('ThreadModel');
-            // Penting: Pastikan method delete() di model Anda memvalidasi userId
-            // agar pengguna hanya bisa menghapus thread miliknya sendiri.
             $threadModel->delete($id, $userId);
         }
 
